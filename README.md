@@ -1,20 +1,27 @@
 # POTHOLE_TORONTO
-UrbanRoadVision is an end-to-end computer vision and civic data analytics pipeline designed to automate the detection, segmentation, and triage of municipal road distress features. Inspired by urban infrastructure challenges, this project leverages advanced instance segmentation architectures to bridge the gap between raw computer vision outputs and actionable public service workflows. By streamlining how surface anomalies like potholes and pavement cracks are identified and classified, the system assists municipal planners and civic engineers in optimizing maintenance schedules and improving response times for public reporting systems.
+This project is an end-to-end computer vision framework automating municipal road distress detection. Addressing urban infrastructure needs, the project integrates real-time civic data with custom instance segmentation.Methodology involves capturing 104 high-resolution asphalt images across Toronto intersections using a Samsung Galaxy S25 Ultra, guided by official 311 municipal records. Custom Python scripts generated pixel-level polygon masks, extracted coordinate text files, and compiled a structured metadata table tracking timestamps, GPS coordinates, distress sub-categories, and maintenance urgency.A YOLO11n-seg model was trained locally via GPU acceleration using the curated dataset. Conclusions: The model achieved an overall mean Average Precision ($\text{mAP}_{50}$) of 0.87, demonstrating that smartphone-captured municipal data paired with automated local training provides an efficient, scalable solution for city planners to optimize infrastructure asset tracking and repair scheduling.
 
-## Technical Architecture & Methodology
-At the core of the pipeline is a fine-tuned YOLO11 instance segmentation model (YOLO11n-seg), optimized to handle spatial feature extraction on high-resolution asphalt imagery. The project workflow is structured into several key stages:
+## Project Workflow:
+### Step 1: Data Collection & Field Capture
 
-Dataset Preparation & Curation: Utilizes a focused, high-quality image dataset specifically annotated for road infrastructure anomalies, split into training and validation sets to prevent overfitting while maximizing generalization across varying lighting and weather conditions.
+Sourced active municipal infrastructure reports from the 311 Toronto database to identify specific street intersections with reported potholes for the current month.
 
-Automated Label Conversion Workflows: Integrates custom preprocessing scripts to clean, standardize, and convert annotation formats into compatible YOLO segmentation structures.
+Captured 104 high-resolution photos across these Toronto intersections using a Samsung Galaxy S25 Ultra.
 
-GPU-Accelerated Model Training: Leverages robust PyTorch-based routines to train the segmentation heads, executing multi-class classification that categorizes distress types, sub-categories, and localized maintenance urgency tiers.
+### Step 2: Custom Annotation & Mask Generation
 
-Spatial & Civic Analytics Integration: Connects detected visual coordinates with spatial mapping logic, allowing municipal stakeholders to analyze the density and severity of infrastructure wear across different geographic zones.
+Developed custom Python scripts to create precise manual segmentation masks over the exact locations of potholes within each photograph.
 
-## Key Features
-Precise Instance Segmentation: Goes beyond simple bounding boxes by generating pixel-level polygon masks for precise area measurement of potholes and surface cracks.
+Extracted the vertex coordinates of the drawn polygon masks and compiled them into standardized text label files.
 
-Multi-Class Triage: Automatically classifies distress severity to help prioritize high-risk road hazards for immediate repair.
+### Step 3: Structured Metadata Compilation
 
-End-to-End Reproducibility: Features modular Python scripts covering data ingestion, augmentation, training execution, and inference visualization.
+Built a comprehensive master table linking each image file to its corresponding metadata.
+
+Recorded critical attributes including timestamps, street intersections, geographic coordinates, pothole categories/sub-categories, and maintenance urgency levels.
+
+### Step 4: Model Training & Inference
+
+Integrated the curated dataset—comprising original asphalt images, custom polygon masks, text coordinate files, and structured label definitions—into a YOLO11 instance segmentation architecture.
+
+Executed local GPU-accelerated model training and validation to accurately predict, segment, and classify road distress features on entirely new, unseen images.
